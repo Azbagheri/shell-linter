@@ -95,7 +95,7 @@ Note that `exclude-issues` contains a comma-separated list of ShellCheck issues 
 #### Run analysis by using a specific version of Shell Linter:
 ```yml
       - name: Run ShellCheck
-        uses: Azbagheri/shell-linter@v0.6.0
+        uses: Azbagheri/shell-linter@v0.7.0
 ```
 
 # Input
