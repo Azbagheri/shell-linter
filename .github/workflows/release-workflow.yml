@@ -1,6 +1,9 @@
 name: Release 
 
-on: workflow_dispatch
+on: 
+  push: 
+    branches:
+      - master
 
 jobs:
   github_release:  
@@ -18,6 +21,7 @@ jobs:
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
         tag: ${{ steps.app-version.outputs.VERSION }}
+        commit: master
         name: Shell Linter ${{ steps.app-version.outputs.VERSION }}
         bodyFile: ./docs/release_notes/v0.7.0.md
 
