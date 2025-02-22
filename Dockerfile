@@ -1,10 +1,13 @@
-FROM alpine:3.13.6
+ARG SHELLCHECK_VERSION=v0.10.0
+FROM koalaman/shellcheck:${SHELLCHECK_VERSION} AS builder
 
-RUN apk update && apk add --no-cache bash
-RUN bash --version 
+FROM alpine:3.20.3
 
-COPY ./src/install_shellcheck.sh ./install_shellcheck.sh
-RUN ./install_shellcheck.sh
+COPY --from=builder /bin/shellcheck /usr/local/bin/
+
+RUN apk update && apk add --no-cache bash && \
+    shellcheck --version && \
+    bash --version
 
 COPY entrypoint.sh /entrypoint.sh
 
