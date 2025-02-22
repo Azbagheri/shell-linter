@@ -2,7 +2,7 @@
 
 [![Release](https://img.shields.io/github/release/Azbagheri/shell-linter.svg)](https://github.com/Azbagheri/shell-linter/releases)
 [![Marketplace](https://img.shields.io/badge/GitHub-Marketplace-red.svg)](https://github.com/marketplace/actions/shell-linter)
-<!--[![Actions Status](https://github.com/Azbagheri/shell-linter/workflows/CI-workflow/badge.svg)](https://github.com/Azbagheri/shell-linter/actions?query=branch%3Adevelop)-->
+[![Actions Status](https://github.com/Azbagheri/shell-linter/workflows/CI-workflow/badge.svg)](https://github.com/Azbagheri/shell-linter/actions?query=branch%3Adevelop)
 
 
 A GitHub Action that performs static analysis for shell scripts using [ShellCheck](https://github.com/koalaman/shellcheck).
