@@ -1,4 +1,4 @@
-name: CI-workflow
+name: CI Pipeline
 
 on: 
   pull_request:
@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v1
+        uses: actions/checkout@v4
       - name: Install Shellcheck
         run: ./src/install_shellcheck.sh
       - name: Run tests

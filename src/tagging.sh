@@ -1,7 +1,7 @@
 #! /bin/bash
 
 token=$1
-repo_owner="azohra"
+repo_owner="Azbagheri"
 repo_name="shell-linter"
 tag_name="latest"
 commit_sha=$(git log -n1 --format=format:"%H")

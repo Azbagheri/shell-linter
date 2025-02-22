@@ -1,6 +1,6 @@
 name: 'Shell Linter'
 description: 'Execute lint check on shell scripts using ShellCheck'
-author: 'ep-mobile'
+author: 'Azadeh Bagheri'
 inputs:
   path:
     description: 'Execute lint check on a specific file or folder.'
@@ -14,7 +14,10 @@ inputs:
     description: 'Specify files or folders to exclude during scan.'
     required: false
     default: ''
-
+  exclude-issues:
+    description: 'Specify shellcheck issues to exclude during scan.'
+    required: false
+    default: ''
 runs:
   using: 'docker'
   image: 'Dockerfile'
@@ -22,6 +25,7 @@ runs:
     - ${{ inputs.path }}
     - ${{ inputs.severity }}
     - ${{ inputs.exclude-paths}}
+    - ${{ inputs.exclude-issues }}
 branding:
   icon: 'check-circle'
   color: 'green'

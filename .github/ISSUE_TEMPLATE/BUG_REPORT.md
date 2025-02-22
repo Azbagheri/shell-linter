@@ -6,7 +6,7 @@ about: Report a bug or something that is not working as expected
 
 ## New Issue Checklist
 
-- [ ] Using the latest version of azohra/shell-linter
+- [ ] Using the latest version of Azbagheri/shell-linter
 - [ ] Able to reproduce error multiple times
 - [ ] Provided information about the bug
 - [ ] Attached additional information about the error including logs

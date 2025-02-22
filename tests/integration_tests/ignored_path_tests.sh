@@ -1,7 +1,7 @@
 #! /bin/bash
 # shellcheck disable=SC2155
 
-source ./entrypoint.sh "" "" "" "--test"
+source ./entrypoint.sh "" "" "" "" "--test"
 
 test_ignore_directories(){
     local exclude_paths="test_dir,severity_mode"

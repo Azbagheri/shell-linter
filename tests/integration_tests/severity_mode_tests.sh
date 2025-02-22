@@ -1,6 +1,6 @@
 #! /bin/bash
 
-source ./entrypoint.sh "" "" "" "--test"
+source ./entrypoint.sh "" "" "" "" "--test"
 
 test_severity_mode_invalid(){
     input_paths="./test_data/severity_mode/test_script_warning.sh"

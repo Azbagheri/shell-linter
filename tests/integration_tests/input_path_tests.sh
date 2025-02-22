@@ -1,7 +1,7 @@
 #! /bin/bash
 # shellcheck disable=SC2155
 
-source ./entrypoint.sh "" "" "" "--test"
+source ./entrypoint.sh "" "" "" "" "--test"
 
 test_execution_mode(){
     local expected_path=./test_data

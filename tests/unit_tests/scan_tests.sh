@@ -1,7 +1,7 @@
 #! /bin/bash
 # shellcheck disable=SC2155
 
-source ./entrypoint.sh "" "style" "" "--test"
+source ./entrypoint.sh "" "style" "" "" "--test"
 
 # scan_file tests
 test_scan_valid_script_with_extension(){

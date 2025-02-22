@@ -4,25 +4,26 @@ on:
   push: 
     branches:
       - master
+
 jobs:
   github_release:  
     runs-on: ubuntu-latest 
     steps:
     - name: Checkout 
-      uses: actions/checkout@v1
+      uses: actions/checkout@v4
 
     - name: Get version
       id: app-version
-      run: echo ::set-output name=VERSION::$(./docs/version)
+      run: echo ::set-output name=VERSION::$(./src/version)
 
-    - name: Tag commit and release
+    - name: Create tag and release
       uses: ncipollo/release-action@v1
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
         tag: ${{ steps.app-version.outputs.VERSION }}
         commit: master
         name: Shell Linter ${{ steps.app-version.outputs.VERSION }}
-        bodyFile: ./docs/release_notes/v0.6.0.md
+        bodyFile: ./docs/release_notes/v0.7.0.md
 
     - name: Update latest tag
       run: ./src/tagging.sh ${{ secrets.GITHUB_TOKEN }}
