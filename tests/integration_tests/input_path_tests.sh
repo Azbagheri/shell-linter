@@ -14,7 +14,7 @@ test_execution_mode(){
 test_invalid_script_with_extension(){
     input_paths="./test_data/script_type/test_script.js"
     local expected1="Found 1 unscanned files that could potentially be supported"
-    local expected2="ShellCheck only supports sh/bash/dash/ksh scripts. For supported scripts to be scanned, make sure to add a proper shebang on the first line of the script."
+    local expected2="ShellCheck only supports sh, bash, dash, and ksh scripts. To ensure your script is scanned correctly, add a proper shebang on the first line or a shell directive on the second line."
     local actual=$(process_input)
 
     assertContains "Actual messages:$actual Did not contain the expected message.\n" "$actual" "$expected1" 
@@ -24,7 +24,7 @@ test_invalid_script_with_extension(){
 test_invalid_script_without_extension(){
     input_paths="./test_data/script_type/test_python"
     local expected1="Found 1 unscanned files that could potentially be supported"
-    local expected2="ShellCheck only supports sh/bash/dash/ksh scripts. For supported scripts to be scanned, make sure to add a proper shebang on the first line of the script."
+    local expected2="ShellCheck only supports sh, bash, dash, and ksh scripts. To ensure your script is scanned correctly, add a proper shebang on the first line or a shell directive on the second line."
     local actual=$(process_input)
 
     assertContains "Actual messages:$actual Did not contain the expected message.\n" "$actual" "$expected1"
@@ -34,7 +34,7 @@ test_invalid_script_without_extension(){
 test_unsupported_script_without_extension(){
     input_paths="./test_data/script_type/test_zsh_wsh"
     local expect1="Found 1 unscanned files that could potentially be supported"
-    local expect2="ShellCheck only supports sh/bash/dash/ksh scripts. For supported scripts to be scanned, make sure to add a proper shebang on the first line of the script."
+    local expect2="ShellCheck only supports sh, bash, dash, and ksh scripts. To ensure your script is scanned correctly, add a proper shebang on the first line or a shell directive on the second line."
     local actual=$(process_input)
 
     assertContains "Actual messages:$actual Did not contain the expected message.\n" "$actual" "$expect1"
@@ -44,7 +44,7 @@ test_unsupported_script_without_extension(){
 test_unsupported_script_with_extension(){
     input_paths="./test_data/script_type/test.zsh"
     local expect1="Found 1 unscanned files that could potentially be supported"
-    local expect2="ShellCheck only supports sh/bash/dash/ksh scripts. For supported scripts to be scanned, make sure to add a proper shebang on the first line of the script."
+    local expect2="ShellCheck only supports sh, bash, dash, and ksh scripts. To ensure your script is scanned correctly, add a proper shebang on the first line or a shell directive on the second line."
     local actual=$(process_input)
 
     assertContains "Actual messages:$actual Did not contain the expected message.\n" "$actual" "$expect1"
@@ -54,7 +54,7 @@ test_unsupported_script_with_extension(){
 test_valid_file_without_shebang(){
     input_paths="./test_data/script_type/test_script_wosh.sh"
     local expected1="Found 1 unscanned files that could potentially be supported"
-    local expected2="ShellCheck only supports sh/bash/dash/ksh scripts. For supported scripts to be scanned, make sure to add a proper shebang on the first line of the script."
+    local expected2="ShellCheck only supports sh, bash, dash, and ksh scripts. To ensure your script is scanned correctly, add a proper shebang on the first line or a shell directive on the second line."
     local actual=$(process_input)
 
     assertContains "Actual messages:$actual Did not contain the expected message.\n" "$actual" "$expected1" 
@@ -109,6 +109,16 @@ test_input_files_with_wildcard() {
     
     assertContains "Actual messages:$actual Did not contain the expected message.\n" "$actual" "$expected1"
     assertContains "Actual messages:$actual Did not contain the expected message.\n" "$actual" "$expected2"
+}
+
+test_script_with_invalid_shell_directive(){
+    local input_paths="./test_data/script_type/script_with_invalid_shell_directive"
+    local not_expected="Scanning script_with_invalid_shell_directive"
+    local expected="ShellCheck only supports sh, bash, dash, and ksh scripts. To ensure your script is scanned correctly, add a proper shebang on the first line or a shell directive on the second line."
+    local actual=$(process_input)
+
+    assertContains "Actual messages:$actual Did not contain the expected message.\n" "$actual" "$expected" 
+    assertNotContains "Actual messages:$actual\n contains the unexpected message: '$not_expected'\n" "$actual" "$not_expected"
 }
 
 tearDown(){
