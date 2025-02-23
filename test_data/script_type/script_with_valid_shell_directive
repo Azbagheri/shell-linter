@@ -1,0 +1,4 @@
+#!/bin/mywrapper
+# shellcheck shell=bash
+
+echo "Hello World"

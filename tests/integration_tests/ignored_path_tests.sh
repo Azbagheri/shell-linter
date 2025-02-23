@@ -21,11 +21,13 @@ test_ignore_files(){
     local actual_message=$(process_input)
     local expected1="Scanning sample.bash"
     local expected2="Scanning test_script_wsh.sh"
-    local notExpected="ShellCheck only supports sh/bash/dash/ksh scripts. For supported scripts to be scanned, make sure to add a proper shebang on the first line of the script."
+    local notExpected1="Scanning test_script.js"
+    local notExpected2="Scanning test_python"
 
     assertContains "Actual messages:$actual_message Did not contain the expected message.\n" "$actual_message" "$expected1"
     assertContains "Actual messages:$actual_message Did not contain the expected message.\n" "$actual_message" "$expected2"
-    assertNotContains "Actual message:$actual_message contains the message.\n" "$actual_message" "$notExpected"
+    assertNotContains "Actual message:$actual_message contains the message.\n" "$actual_message" "$notExpected1"
+    assertNotContains "Actual message:$actual_message contains the message.\n" "$actual_message" "$notExpected2"
 }
 
 test_ignore_file_and_directory(){
@@ -33,11 +35,13 @@ test_ignore_file_and_directory(){
     local actual_message=$(process_input)
     local expected1="Scanning example_script.sh"
     local expected2="Scanning executable_script"
-    local notExpected="ShellCheck only supports sh/bash/dash/ksh scripts. For supported scripts to be scanned, make sure to add a proper shebang on the first line of the script."
+    local notExpected1="Scanning invalid_script"
+    local notExpected2="Scanning test_script_error"
 
     assertContains "Actual messages:$actual_message Did not contain the expected message.\n" "$actual_message" "$expected1"
     assertContains "Actual messages:$actual_message Did not contain the expected message.\n" "$actual_message" "$expected2"
-    assertNotContains "Actual message:$actual_message contains the message.\n" "$actual_message" "$notExpected"
+    assertNotContains "Actual message:$actual_message contains the message.\n" "$actual_message" "$notExpected1"
+    assertNotContains "Actual message:$actual_message contains the message.\n" "$actual_message" "$notExpected2"
 }
 
 tearDown(){

@@ -1,0 +1,4 @@
+#!/bin/mywrapper
+# shellcheck shell=zsh
+
+echo "Hello World"
