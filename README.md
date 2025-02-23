@@ -2,7 +2,7 @@
 
 [![Release](https://img.shields.io/github/release/Azbagheri/shell-linter.svg)](https://github.com/Azbagheri/shell-linter/releases)
 [![Marketplace](https://img.shields.io/badge/GitHub-Marketplace-red.svg)](https://github.com/marketplace/actions/shell-linter)
-<!--[![Actions Status](https://github.com/Azbagheri/shell-linter/workflows/CI-workflow/badge.svg)](https://github.com/Azbagheri/shell-linter/actions?query=branch%3Adevelop)-->
+[![Actions Status](https://github.com/Azbagheri/shell-linter/workflows/CI-workflow/badge.svg)](https://github.com/Azbagheri/shell-linter/actions?query=branch%3Adevelop)
 
 
 A GitHub Action that performs static analysis for shell scripts using [ShellCheck](https://github.com/koalaman/shellcheck).
@@ -25,7 +25,7 @@ We sincerely apologize for any inconvenience this has caused.
 
 # Usage
 
-Shell Linter can perform static analysis in various ways. By default it scans all the ShellCheck-supported shell scripts (sh/bash/dash/ksh) in your project. However, you can use the `path` parameter to scan a specific file or folder or use the `exclude-paths` parameter to exclude files or folders from the scan. With Shell Linter, you can also specify the minimum severity of errors to consider using the `severity` parameter. Specific use cases along with examples are shown below:
+Shell Linter can perform static analysis in various ways. By default it scans all the ShellCheck-supported shell scripts (sh, bash, dash, ksh) in your project. However, you can use the `path` parameter to scan a specific file or folder or use the `exclude-paths` parameter to exclude files or folders from the scan. With Shell Linter, you can also specify the minimum severity of errors to consider using the `severity` parameter. Specific use cases along with examples are shown below:
 
 #### Run static analysis for all the supported shell scripts in your repository:
 ```yml
@@ -95,7 +95,7 @@ Note that `exclude-issues` contains a comma-separated list of ShellCheck issues 
 #### Run analysis by using a specific version of Shell Linter:
 ```yml
       - name: Run ShellCheck
-        uses: Azbagheri/shell-linter@v0.7.0
+        uses: Azbagheri/shell-linter@v0.8.0
 ```
 
 # Input
