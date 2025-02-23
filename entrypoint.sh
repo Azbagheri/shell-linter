@@ -10,7 +10,8 @@ my_dir=$(pwd)
 status_code="0"
 find_path_clauses=(! -path "${my_dir}/.git/*")
 invalid_files=()
-scan_regex="#!.*[/ ](sh|bash|dash|ksh)$"
+shebang_regex="^#!.*[/ ](sh|bash|dash|ksh)$"
+second_line_regex="^#[[:blank:]]*shellcheck[[:blank:]]+shell=(sh|bash|dash|ksh)[[:blank:]]*$"
 
 process_input(){      
     [ -n "$execution_mode" ] && my_dir="./test_data"
@@ -56,24 +57,17 @@ process_input(){
 
 scan_file(){
     local file_path=$1
-    local file=$(basename -- "$file_path")
     local first_line=$(head -n 1 "$file_path")
     
-    if [[ "$first_line" =~ $scan_regex ]]; then
-        echo
-        echo "###############################################"
-        echo "         Scanning $file"
-        echo "###############################################"
-        shellcheck -x "$file_path" --severity="$severity_mode" $optional_params
-        local exit_code=$?
-        if [ $exit_code -eq 0 ] ; then
-            printf "%b" "Successfully scanned ${file_path} 🙌\n"
-        else
-            status_code=$exit_code
-            printf "\e[31m ERROR: ShellCheck detected issues in %s.\e[0m\n" "${file_path} 🐛"
-        fi
+    if [[ "$first_line" =~ $shebang_regex ]]; then
+        run_shellcheck $file_path
     else
-        invalid_files+=( $file_path )
+        local second_line=$(sed -n '2p' "$file_path")
+        if [[ "$second_line" =~ $second_line_regex ]]; then
+            run_shellcheck $file_path
+        else
+            invalid_files+=( $file_path )
+        fi
     fi
 }
 
@@ -81,13 +75,25 @@ scan_dir(){
     echo "Scanning all the shell scripts at $1 🔎"
     while IFS= read -r script 
     do
-        local first_line=$(head -n 1 "$script")
-        if [[ "$first_line" =~ $scan_regex ]]; then
-            scan_file "$script"
-        else
-            invalid_files+=( $script )
-        fi
+        scan_file "$script"
     done < <(find "$1" -type f \( -iname '*.sh' -o -iname '*.bash' -o -iname '*.ksh' -o ! -iname '*.*' \) "${find_path_clauses[@]}")
+}
+
+run_shellcheck(){
+    local file_path=$1
+    local file=$(basename -- "$file_path")
+    echo
+    echo "###############################################"
+    echo "         Scanning $file"
+    echo "###############################################"
+    shellcheck -x "$file_path" --severity="$severity_mode" $optional_params
+    local exit_code=$?
+    if [ $exit_code -eq 0 ] ; then
+    printf "%b" "Successfully scanned ${file_path} 🙌\n"
+    else
+    status_code=$exit_code
+    printf "\e[31m ERROR: ShellCheck detected issues in %s.\e[0m\n" "${file_path} 🐛"
+    fi 
 }
 
 # Logging files with no extension that are not amongst the supported scripts or scripts that are supported but don't have a shebang.
@@ -96,7 +102,9 @@ log_invalid_files(){
     for file in ${invalid_files[@]}; do
         printf "\n\t\e[33m %s \e[0m\n" "$file"
     done
-    printf "\n\e[33m ShellCheck only supports sh/bash/dash/ksh scripts. For supported scripts to be scanned, make sure to add a proper shebang on the first line of the script.\n\n To fix the warning for the unsupported scripts or to ignore specific files, use the 'exclude-paths' input. For more information check:
+    printf "\n\e[33m ShellCheck only supports sh, bash, dash, and ksh scripts. To ensure your script is scanned correctly, add a proper shebang on the first line or a shell directive on the second line. For more details, see: https://www.shellcheck.net/wiki/SC1008 \n"
+     
+    printf "\n\e[33m To fix the warning for unsupported scripts or to ignore specific files, use the 'exclude-paths' input. For more information, check:
     https://github.com/Azbagheri/shell-linter#input\e[0m\n"
 }
 
