@@ -3,7 +3,7 @@ name: Release
 on: 
   push: 
     branches:
-      - master
+      - main
 
 jobs:
   github_release:  
@@ -21,9 +21,9 @@ jobs:
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
         tag: ${{ steps.app-version.outputs.VERSION }}
-        commit: master
+        commit: main
         name: Shell Linter ${{ steps.app-version.outputs.VERSION }}
-        bodyFile: ./docs/release_notes/v0.7.0.md
+        bodyFile: ./docs/release_notes/v0.8.0.md
 
     - name: Update latest tag
       run: ./src/tagging.sh ${{ secrets.GITHUB_TOKEN }}
